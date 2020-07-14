@@ -1,4 +1,7 @@
 #include "RAM.h"
+#include "Display.h"
+#include <time.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -19,8 +22,8 @@ struct CPU_t
 } typedef CPU_t;
 
 void initCPU(CPU_t* CPU);
-void runCPU(CPU_t* CPU, RAM_t* RAM);
-void exeOPC(CPU_t *CPU , uint8_t type, uint8_t a, uint8_t b, uint8_t c);
+void runCPU(CPU_t* CPU, RAM_t* RAM, Display_t *DISPLAY);
+void exeOPC(CPU_t *CPU , RAM_t *RAM, Display_t *DISPLAY, uint8_t type, uint8_t a, uint8_t b, uint8_t c);
 
 uint8_t concat2Bits(uint8_t a, uint8_t b);
 uint16_t concat3Bits(uint8_t a, uint8_t b, uint8_t c);

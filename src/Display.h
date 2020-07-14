@@ -9,3 +9,5 @@ struct Display_t
     bool screen_area [WIDTH][HEIGHT];
 
 } typedef Display_t;
+
+void initDisplay(Display_t *DISPLAY);

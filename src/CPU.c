@@ -21,7 +21,8 @@ void runCPU(CPU_t *CPU, RAM_t *RAM, Display_t *DISPLAY) {
         //printf("PC --> %x\n", CPU->PC);
         CPU->PC += 2;
         exeOPC(CPU, RAM ,DISPLAY ,type, a, b, c);
-
+        usleep(100);
+        //printFrame(DISPLAY);
         /*
         printf("OP --> %x%x%x%x\n", type, a , b, c);
         printf("PC --> %x\n", CPU->PC);
@@ -35,7 +36,7 @@ void runCPU(CPU_t *CPU, RAM_t *RAM, Display_t *DISPLAY) {
             printf(" SR%i-->%x ||", i, CPU->SR[i]);
         }
         printf("\n");
-        */
+        
         for(int y = 0; y < HEIGHT; y++) {
             for(int x = 0; x < WIDTH; x++) {
                 if(DISPLAY->screen_area[y][x] == 1) {
@@ -46,8 +47,8 @@ void runCPU(CPU_t *CPU, RAM_t *RAM, Display_t *DISPLAY) {
             }
             printf("\n");
         }
-        
         printf("\n");
+        */
     }
 }
 
@@ -109,13 +110,14 @@ void exeOPC(CPU_t *CPU, RAM_t *RAM, Display_t *DISPLAY,uint8_t type, uint8_t a, 
         for(int j = 0; j < c; j++) {
             uint8_t sprite = RAM->mem[CPU->I + j];
             for(int i = 0; i < 8; i++){
-                int px = (CPU->Vx[a] + i) & 63;
-                int py = (CPU->Vx[b] + j) & 31;
+                int px = (CPU->Vx[a] + i);
+                int py = (CPU->Vx[b] + j);
                 int pixel = (sprite & (1 << (7-i))) != 0;
                 CPU->Vx[0xF] |= (DISPLAY->screen_area[py][px] & pixel);
                 DISPLAY->screen_area[py][px] ^= pixel;
             }
         }
+        printFrame(DISPLAY);
     break;
     default:
         break;

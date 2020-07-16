@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdint.h>
-
+ 
 #define MAX_REG 16      // Numero de registros
 
 struct CPU_t

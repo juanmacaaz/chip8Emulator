@@ -11,6 +11,6 @@ int main() {
 
     initCPU(&CPU);
     initDisplay(&DISPLAY);
-    read_rom(&RAM, "./games/VERS");
+    read_rom(&RAM, "./games/TETRIS");
     runCPU(&CPU, &RAM, &DISPLAY);
 }

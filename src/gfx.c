@@ -13,6 +13,7 @@ Version 2, 9/23/2011 - Fixes a bug that could result in jerky animation.
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "gfx.h"
 
@@ -89,6 +90,25 @@ void gfx_open( int width, int height, const char *title )
 void gfx_point( int x, int y )
 {
 	XDrawPoint(gfx_display,gfx_window,gfx_gc,x,y);
+}
+
+void gfx_points(int w, int h, bool screen [][64])
+{
+	XPoint screenGFX [w*h*20];
+	int indx = 0;
+	for(int i = 0; i < w; i++) {
+        for(int j = 0; j < h; j++){
+            if (screen[j][i]){
+				for(int x = i*20; x < (i*20)+20; x++) {
+                    for(int y = j*20; y < (j*20)+20; y++) {
+                        screenGFX[indx].x = x;
+						screenGFX[indx++].y = y;
+                    }
+                }
+			}   
+        }
+    }
+	XDrawPoints(gfx_display, gfx_window, gfx_gc, screenGFX, w*h*20, 0);
 }
 
 /* Draw a line from (x1,y1) to (x2,y2) */

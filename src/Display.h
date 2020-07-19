@@ -4,7 +4,7 @@
 #define WIDTH   64
 #define HEIGHT  32
 
-#define SCALE   10
+#define SCALE   20
 
 struct Display_t
 {
@@ -15,3 +15,4 @@ struct Display_t
 
 void initDisplay(Display_t *DISPLAY);
 void printFrame(Display_t *DISPLAY);
+void clsDisplay(Display_t *DISPLAY);

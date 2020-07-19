@@ -55,7 +55,7 @@ void runCPU(CPU_t *CPU, RAM_t *RAM, Display_t *DISPLAY) {
 void exeOPC(CPU_t *CPU, RAM_t *RAM, Display_t *DISPLAY,uint8_t type, uint8_t a, uint8_t b, uint8_t c) {
     switch (type)
     {
-    case 0: if (c == 0) {} else {CPU->PC = CPU->SR[CPU->SP]; CPU->SP--;}        break;
+    case 0: if (c == 0) {clsDisplay(DISPLAY);} else {CPU->PC = CPU->SR[CPU->SP]; CPU->SP--;}        break;
     case 1: CPU->PC = concat3Bits(a, b, c);                                     break;
     case 2: CPU->SP++; CPU->SR[CPU->SP] = CPU->PC; CPU->PC = concat3Bits(a,b,c);    break;
     case 3: if (CPU->Vx[a] == concat2Bits(b,c)) { CPU->PC+=2; }         break;
@@ -79,7 +79,7 @@ void exeOPC(CPU_t *CPU, RAM_t *RAM, Display_t *DISPLAY,uint8_t type, uint8_t a, 
             }else {
                 CPU->Vx[0xF] = 0;
             } 
-            CPU->Vx[a] = CPU->Vx[a] >> 2;
+            CPU->Vx[a] = CPU->Vx[a] >> 1;
             break;
         }
         case 7: 
@@ -97,7 +97,7 @@ void exeOPC(CPU_t *CPU, RAM_t *RAM, Display_t *DISPLAY,uint8_t type, uint8_t a, 
             }else {
                 CPU->Vx[0xF] = 0;
             } 
-            CPU->Vx[a] = CPU->Vx[a] << 2;
+            CPU->Vx[a] = CPU->Vx[a] << 1;
             break;
         }
         break;
@@ -110,8 +110,8 @@ void exeOPC(CPU_t *CPU, RAM_t *RAM, Display_t *DISPLAY,uint8_t type, uint8_t a, 
         for(int j = 0; j < c; j++) {
             uint8_t sprite = RAM->mem[CPU->I + j];
             for(int i = 0; i < 8; i++){
-                int px = (CPU->Vx[a] + i);
-                int py = (CPU->Vx[b] + j);
+                int px = (CPU->Vx[a] + i) & 63;
+                int py = (CPU->Vx[b] + j) & 31;
                 int pixel = (sprite & (1 << (7-i))) != 0;
                 CPU->Vx[0xF] |= (DISPLAY->screen_area[py][px] & pixel);
                 DISPLAY->screen_area[py][px] ^= pixel;

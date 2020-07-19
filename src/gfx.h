@@ -28,6 +28,8 @@ void gfx_color( int red, int green, int blue );
 /* Clear the graphics window to the background color. */
 void gfx_clear();
 
+void gfx_points(int w, int h, bool screen [][64]);
+
 /* Change the current background color. */
 void gfx_clear_color( int red, int green, int blue );
 
